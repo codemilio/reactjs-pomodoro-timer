@@ -6,10 +6,6 @@ export function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Button />
-      <Button variant='danger'/>
-      <Button variant='secondary'/>
-      <Button variant='warning'/>
-      <Button variant='success'/>
     </ThemeProvider>
   )
 }
