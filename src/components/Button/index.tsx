@@ -5,7 +5,5 @@ type Props = {
 }
 
 export function Button({ variant = 'primary' }: Props) {
-  return(
-    <ButtonContainer variant={variant}> Enviar </ButtonContainer>
-  )
+  return <ButtonContainer variant={variant}> Enviar </ButtonContainer>
 }
