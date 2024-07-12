@@ -1,4 +1,4 @@
-import { ButtonContainer, ButtonVariant } from './button.style'
+import { ButtonContainer, ButtonVariant } from './styles'
 
 type Props = {
   variant?: ButtonVariant
