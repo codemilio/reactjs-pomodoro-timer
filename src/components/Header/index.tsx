@@ -1,12 +1,18 @@
 import { HeaderContainer } from './styles'
+import { Timer, Scroll } from 'phosphor-react'
+import logo from '../../assets/logo.svg'
 
-export function Header(){
-  return(
+export function Header() {
+  return (
     <HeaderContainer>
-      <span>logo</span>
+      <img src={logo} alt="" />
       <nav>
-        <a href=""> timer </a>
-        <a href=""> history </a>
+        <a href="">
+          <Timer />
+        </a>
+        <a href="">
+          <Scroll />
+        </a>
       </nav>
     </HeaderContainer>
   )
