@@ -52,7 +52,7 @@ export const Separator = styled.div`
   justify-content: center;
 `
 
-export const StartCoutdownButton = styled.button`
+export const StartCountdownButton = styled.button`
   width: 100%;
   border: 0;
   padding: 1rem;
@@ -69,7 +69,12 @@ export const StartCoutdownButton = styled.button`
   background-color: ${(props) => props.theme['green-500']};
   color: ${(props) => props.theme['gray-100']};
 
-  &:hover {
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
     background: ${(props) => props.theme['green-700']};
   }
 `
