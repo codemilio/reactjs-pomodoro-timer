@@ -16,16 +16,16 @@ export function History() {
           </thead>
           <tbody>
             <tr>
-              <th>Commitar</th>
-              <th>20min</th>
-              <th>Hoje</th>
-              <th>Em andamento</th>
+              <td>Commitar</td>
+              <td>20min</td>
+              <td>Hoje</td>
+              <td>Em andamento</td>
             </tr>
             <tr>
-              <th>Commitar</th>
-              <th>20min</th>
-              <th>Hoje</th>
-              <th>Em andamento</th>
+              <td>Commitar</td>
+              <td>20min</td>
+              <td>Hoje</td>
+              <td>Em andamento</td>
             </tr>
           </tbody>
         </table>
