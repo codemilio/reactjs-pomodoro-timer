@@ -61,14 +61,14 @@ export const HistoryList = styled.div`
   }
 `
 
-interface StatusProps {
-  statusColor: 'yellow' | 'red' | 'green'
-}
-
 const STATUS_COLORS = {
   yellow: 'yellow-500',
   green: 'green-500',
   red: 'red-500',
+}
+
+interface StatusProps {
+  statusColor: keyof typeof STATUS_COLORS
 }
 
 export const Status = styled.span<StatusProps>`
