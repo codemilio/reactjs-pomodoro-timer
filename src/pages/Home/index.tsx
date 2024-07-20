@@ -9,6 +9,7 @@ import {
   TaskInput,
   MinutesAmoutInput,
 } from './styles'
+
 export function Home() {
   const [task, setTask] = useState('')
 
@@ -26,6 +27,7 @@ export function Home() {
             type="text"
             id="task"
             list="suggestions"
+            placeholder="Digite sua tarefa..."
             onChange={handleChange}
             value={task}
           />
@@ -35,7 +37,14 @@ export function Home() {
           </datalist>
 
           <label htmlFor="minutesAmount"> Durante: </label>
-          <MinutesAmoutInput type="number" id="minutesAmount" />
+          <MinutesAmoutInput
+            type="number"
+            id="minutesAmount"
+            placeholder="00"
+            min={5}
+            max={60}
+            step={5}
+          />
           <span>minutos.</span>
         </FormContainer>
 
