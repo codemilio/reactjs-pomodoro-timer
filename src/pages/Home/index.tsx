@@ -13,25 +13,24 @@ import {
 } from './styles'
 
 export function Home() {
-  const [task, setTask] = useState('')
+  const { register, handleSubmit, watch } = useForm()
+  const task = watch('task')
+  const isSubmitDisabled = !task
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
-    setTask(value)
+  const handleCreateNewSycle = (data: any) => {
+    console.log(data)
   }
 
   return (
     <HomeContainer>
       <form action="">
-        <FormContainer>
+        <FormContainer onSubmit={handleSubmit(handleCreateNewSycle)}>
           <label htmlFor="task"> Tarefa: </label>
           <TaskInput
-            type="text"
             id="task"
             list="suggestions"
             placeholder="Digite sua tarefa..."
-            onChange={handleChange}
-            value={task}
+            {...register('task')}
           />
 
           <datalist id="suggestions">
@@ -46,6 +45,7 @@ export function Home() {
             min={5}
             max={60}
             step={5}
+            {...register('minutesAmout', { valueAsNumber: true })}
           />
           <span>minutos.</span>
         </FormContainer>
@@ -58,7 +58,7 @@ export function Home() {
           <span>0</span>
         </ContdownContainer>
 
-        <StartCountdownButton type="submit" disabled={!task}>
+        <StartCountdownButton type="submit" disabled={isSubmitDisabled}>
           <Play size={24} />
           Começar
         </StartCountdownButton>
