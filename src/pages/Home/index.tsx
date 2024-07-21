@@ -1,4 +1,3 @@
-import { ChangeEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Play } from 'phosphor-react'
