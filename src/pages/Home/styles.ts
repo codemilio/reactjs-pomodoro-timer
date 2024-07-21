@@ -20,6 +20,7 @@ export const FormContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
   gap: 0.5rem;
   color: ${(props) => props.theme['gray-100']};
   font-size: 1.25rem;

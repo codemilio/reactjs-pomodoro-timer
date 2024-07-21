@@ -12,6 +12,7 @@ import {
   TaskInput,
   MinutesAmoutInput,
 } from './styles'
+import { useState } from 'react'
 
 const newCycleFormValidationSchema = zod.object({
   task: zod.string().min(1, 'Informe a tarefa'),
@@ -19,8 +20,14 @@ const newCycleFormValidationSchema = zod.object({
 })
 
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
+type Cycle = NewCycleFormData & {
+  id: string
+}
 
 export function Home() {
+  const [cycles, setCycles] = useState<Cycle[]>([])
+  const [activeCycleId, setActiveCyleId] = useState<string | null>(null)
+  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
   const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
     defaultValues: {
@@ -31,16 +38,33 @@ export function Home() {
 
   const task = watch('task')
   const isSubmitDisabled = !task
+  const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
+  const totalSeconds = activeCycle ? activeCycle.minutesAmout * 60 : 0
+  const currentSeconds = activeCycle ? totalSeconds - amountSecondsPassed : 0
+  const minutesAmount = Math.floor(currentSeconds / 60)
+  const secondsAmount = currentSeconds % 60
+  const minutes = String(minutesAmount).padStart(2, '0')
+  const seconds = String(secondsAmount).padStart(2, '0')
 
   const handleCreateNewSycle = (data: NewCycleFormData) => {
-    console.log(data)
+    const id = String(new Date().getTime())
+    const newCycle: Cycle = {
+      id,
+      task: data.task,
+      minutesAmout: data.minutesAmout,
+    }
+
+    setCycles((state) => [...state, newCycle])
+    setActiveCyleId(id)
     reset()
+
+    console.log(data)
   }
 
   return (
     <HomeContainer>
-      <form action="">
-        <FormContainer onSubmit={handleSubmit(handleCreateNewSycle)}>
+      <form action="" onSubmit={handleSubmit(handleCreateNewSycle)}>
+        <FormContainer>
           <label htmlFor="task"> Tarefa: </label>
           <TaskInput
             id="task"
@@ -67,18 +91,14 @@ export function Home() {
         </FormContainer>
 
         <ContdownContainer>
-          <span>0</span>
-          <span>0</span>
+          <span>{minutes[0]}</span>
+          <span>{minutes[1]}</span>
           <Separator>:</Separator>
-          <span>0</span>
-          <span>0</span>
+          <span>{seconds[0]}</span>
+          <span>{seconds[1]}</span>
         </ContdownContainer>
 
-        <StartCountdownButton
-          type="submit"
-          disabled={isSubmitDisabled}
-          onClick={() => console.log('clicou')}
-        >
+        <StartCountdownButton type="submit" disabled={isSubmitDisabled}>
           <Play size={24} />
           Começar
         </StartCountdownButton>
