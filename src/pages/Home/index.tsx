@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Play } from 'phosphor-react'
@@ -12,7 +13,7 @@ import {
   TaskInput,
   MinutesAmoutInput,
 } from './styles'
-import { useState } from 'react'
+import { differenceInSeconds } from 'date-fns'
 
 const newCycleFormValidationSchema = zod.object({
   task: zod.string().min(1, 'Informe a tarefa'),
@@ -22,6 +23,7 @@ const newCycleFormValidationSchema = zod.object({
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 type Cycle = NewCycleFormData & {
   id: string
+  startDate: Date
 }
 
 export function Home() {
@@ -52,14 +54,23 @@ export function Home() {
       id,
       task: data.task,
       minutesAmout: data.minutesAmout,
+      startDate: new Date(),
     }
 
     setCycles((state) => [...state, newCycle])
     setActiveCyleId(id)
     reset()
-
-    console.log(data)
   }
+
+  useEffect(() => {
+    if (activeCycle) {
+      setInterval(() => {
+        setAmountSecondsPassed(
+          differenceInSeconds(new Date(), activeCycle.startDate),
+        )
+      }, 1000)
+    }
+  }, [activeCycle])
 
   return (
     <HomeContainer>
