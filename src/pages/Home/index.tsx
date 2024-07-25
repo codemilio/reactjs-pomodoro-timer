@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Pause, Play } from 'phosphor-react'
+import { Play, Stop } from 'phosphor-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import zod from 'zod'
 import {
@@ -25,6 +25,7 @@ type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 type Cycle = NewCycleFormData & {
   id: string
   startDate: Date
+  interruptedDate?: Date
 }
 
 export function Home() {
@@ -63,6 +64,18 @@ export function Home() {
     setActiveCyleId(id)
     setAmountSecondsPassed(0)
     reset()
+  }
+
+  const handleInterruptCycle = () => {
+    setActiveCyleId(null)
+
+    setCycles((currentCycles) => {
+      return currentCycles.map((item) =>
+        item.id === activeCycleId
+          ? { ...item, interruptedDate: new Date() }
+          : item,
+      )
+    })
   }
 
   useEffect(() => {
@@ -127,9 +140,9 @@ export function Home() {
         </ContdownContainer>
 
         {activeCycle ? (
-          <StopCountdownButton type="button">
-            <Pause size={24} />
-            Pausar
+          <StopCountdownButton type="button" onClick={handleInterruptCycle}>
+            <Stop size={24} />
+            Interromper
           </StopCountdownButton>
         ) : (
           <StartCountdownButton type="submit" disabled={isSubmitDisabled}>
