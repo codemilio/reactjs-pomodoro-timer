@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Play } from 'phosphor-react'
+import { Pause, Play } from 'phosphor-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import zod from 'zod'
 import {
@@ -10,6 +10,7 @@ import {
   ContdownContainer,
   Separator,
   StartCountdownButton,
+  StopCountdownButton,
   TaskInput,
   MinutesAmoutInput,
 } from './styles'
@@ -41,6 +42,7 @@ export function Home() {
   const task = watch('task')
   const isSubmitDisabled = !task
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
+  const isActiveCycle = !!activeCycle
   const totalSeconds = activeCycle ? activeCycle.minutesAmout * 60 : 0
   const currentSeconds = activeCycle ? totalSeconds - amountSecondsPassed : 0
   const minutesAmount = Math.floor(currentSeconds / 60)
@@ -94,6 +96,7 @@ export function Home() {
             id="task"
             list="suggestions"
             placeholder="Digite sua tarefa..."
+            disabled={isActiveCycle}
             {...register('task')}
           />
 
@@ -110,6 +113,7 @@ export function Home() {
             max={60}
             step={5}
             {...register('minutesAmout', { valueAsNumber: true })}
+            disabled={isActiveCycle}
           />
           <span>minutos.</span>
         </FormContainer>
@@ -122,10 +126,17 @@ export function Home() {
           <span>{seconds[1]}</span>
         </ContdownContainer>
 
-        <StartCountdownButton type="submit" disabled={isSubmitDisabled}>
-          <Play size={24} />
-          Começar
-        </StartCountdownButton>
+        {activeCycle ? (
+          <StopCountdownButton type="button">
+            <Pause size={24} />
+            Pausar
+          </StopCountdownButton>
+        ) : (
+          <StartCountdownButton type="submit" disabled={isSubmitDisabled}>
+            <Play size={24} />
+            Começar
+          </StartCountdownButton>
+        )}
       </form>
     </HomeContainer>
   )
