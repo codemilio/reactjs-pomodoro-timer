@@ -18,7 +18,7 @@ import { differenceInSeconds } from 'date-fns'
 
 const newCycleFormValidationSchema = zod.object({
   task: zod.string().min(1, 'Informe a tarefa'),
-  minutesAmout: zod.number().min(5).max(60),
+  minutesAmout: zod.number().min(1).max(60),
 })
 
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
@@ -96,6 +96,9 @@ export function Home() {
                 : item,
             )
           })
+
+          setAmountSecondsPassed(totalSeconds)
+          clearInterval(intervalId)
         } else {
           setAmountSecondsPassed(difference)
         }
@@ -135,7 +138,7 @@ export function Home() {
             type="number"
             id="minutesAmount"
             placeholder="00"
-            min={5}
+            min={1}
             max={60}
             step={5}
             {...register('minutesAmout', { valueAsNumber: true })}
