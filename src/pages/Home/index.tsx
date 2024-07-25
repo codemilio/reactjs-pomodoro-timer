@@ -99,6 +99,7 @@ export function Home() {
 
           setAmountSecondsPassed(totalSeconds)
           clearInterval(intervalId)
+          setActiveCyleId(null)
         } else {
           setAmountSecondsPassed(difference)
         }
