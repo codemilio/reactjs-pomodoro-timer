@@ -26,6 +26,7 @@ type Cycle = NewCycleFormData & {
   id: string
   startDate: Date
   interruptedDate?: Date
+  finishedDate?: Date
 }
 
 export function Home() {
@@ -79,20 +80,32 @@ export function Home() {
   }
 
   useEffect(() => {
-    let interval: number
-
+    let intervalId: number
     if (activeCycle) {
-      interval = setInterval(() => {
-        setAmountSecondsPassed(
-          differenceInSeconds(new Date(), activeCycle.startDate),
+      intervalId = setInterval(() => {
+        const difference = differenceInSeconds(
+          new Date(),
+          activeCycle.startDate,
         )
+
+        if (difference >= totalSeconds) {
+          setCycles((currentCyles) => {
+            return currentCyles.map((item) =>
+              item.id === activeCycleId
+                ? { ...item, finishedDate: new Date() }
+                : item,
+            )
+          })
+        } else {
+          setAmountSecondsPassed(difference)
+        }
       }, 1000)
     }
 
     return () => {
-      clearInterval(interval)
+      clearInterval(intervalId)
     }
-  }, [activeCycle])
+  }, [activeCycle, totalSeconds, activeCycleId])
 
   useEffect(() => {
     if (activeCycle) {
