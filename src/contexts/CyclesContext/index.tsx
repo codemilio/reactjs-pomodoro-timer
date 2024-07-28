@@ -1,4 +1,10 @@
-import { ReactNode, createContext, useContext, useState } from 'react'
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useReducer,
+  useState,
+} from 'react'
 import type { Cycle, NewCycleFormData } from '../../@types/types'
 
 type ContextProps = {
@@ -17,6 +23,18 @@ type ProviderProps = {
   children: ReactNode
 }
 
+type CyclesState = {
+  cycles: Cycle[]
+  activeCycleId: string | null
+}
+
+type CyclesAction = {
+  type:
+    | 'ADD_NEW_CYCLE'
+    | 'INTERRUPT_CURRENT_CYCLE'
+    | 'MARK_CURRENT_CYCLE_AS_FINISHED'
+  payload: undefined
+}
 const CyclesContext = createContext<ContextProps | undefined>(undefined)
 
 export const useCyclesContext = () => {
@@ -28,8 +46,18 @@ export const useCyclesContext = () => {
 }
 
 export function CyclesProvider({ children }: ProviderProps) {
-  const [cycles, setCycles] = useState<Cycle[]>([])
-  const [activeCycleId, setActiveCyleId] = useState<string | null>(null)
+  const [cyclesState, setCycles] = useReducer(
+    (state: CyclesState, action: CyclesAction) => {
+      console.log(action)
+      return state
+    },
+    {
+      cycles: [],
+      activeCycleId: null,
+    },
+  )
+
+  const { cycles, activeCycleId } = cyclesState
   const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
 
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
