@@ -2,6 +2,7 @@ import { ReactNode, createContext, useContext, useState } from 'react'
 import type { Cycle, NewCycleFormData } from '../../@types/types'
 
 type ContextProps = {
+  cycles: Cycle[]
   activeCycle: Cycle | undefined
   activeCycleId: string | null
   amountSecondsPassed: number
@@ -80,6 +81,7 @@ export function CyclesProvider({ children }: ProviderProps) {
   return (
     <CyclesContext.Provider
       value={{
+        cycles,
         activeCycle,
         activeCycleId,
         amountSecondsPassed,
