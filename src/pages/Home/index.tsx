@@ -5,7 +5,7 @@ import { NewCycleForm } from './NewCycleForm'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useCyclesContext } from '../../contexts/CyclesContext'
 import { zodResolver } from '@hookform/resolvers/zod'
-import type { NewCycleFormData } from '../../@types/types'
+import type { NewCycleFormData } from '../../reducers/cycles/types'
 
 import {
   HomeContainer,
