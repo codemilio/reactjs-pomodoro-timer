@@ -7,7 +7,7 @@ export function History() {
   const { cycles } = useCyclesContext()
   return (
     <HistoryContainer>
-      <h1>History</h1>
+      <h1>Meu histórico</h1>
       <HistoryList>
         <table>
           <thead>
