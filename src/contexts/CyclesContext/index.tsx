@@ -19,7 +19,6 @@ type ContextProps = {
   activeCycleId: string | null
   amountSecondsPassed: number
   markCycleAsFinished: () => void
-  handleChangeActiveCycleId: (id: string | null) => void
   handleChangeSecondsPassed: (seconds: number) => void
   handleCreateNewCycle: (data: NewCycleFormData) => void
   handleInterruptCycle: () => void
@@ -50,12 +49,8 @@ export function CyclesProvider({ children }: ProviderProps) {
 
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
 
-  const handleChangeActiveCycleId = (id: string | null) => {
-    setActiveCyleId(id)
-  }
-
   const markCycleAsFinished = () => {
-    markCurrentCycleAsFinishedAction()
+    dispatch(markCurrentCycleAsFinishedAction())
   }
 
   const handleChangeSecondsPassed = (seconds: number) => {
@@ -76,8 +71,6 @@ export function CyclesProvider({ children }: ProviderProps) {
   }
 
   const handleInterruptCycle = () => {
-    setActiveCyleId(null)
-
     dispatch(interrupCurrentCycleAction())
   }
 
@@ -89,7 +82,6 @@ export function CyclesProvider({ children }: ProviderProps) {
         activeCycleId,
         amountSecondsPassed,
         markCycleAsFinished,
-        handleChangeActiveCycleId,
         handleChangeSecondsPassed,
         handleCreateNewCycle,
         handleInterruptCycle,
